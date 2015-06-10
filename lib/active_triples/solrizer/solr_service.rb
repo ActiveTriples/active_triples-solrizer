@@ -7,7 +7,7 @@ module ActiveTriples::Solrizer
 
     attr_reader :conn
 
-    def initialize(host=nil, args={})
+    def initialize(host, args)
       host = ActiveTriples::Solrizer.configuration.solr_uri unless host
       args = {read_timeout: ActiveTriples::Solrizer.configuration.read_timeout,
               open_timeout: ActiveTriples::Solrizer.configuration.open_timeout}.merge(args.dup)

@@ -56,7 +56,7 @@ class DummyResource < ActiveTriples::Resource
 end
 
 # initialize solr service with defaults
-ss = ActiveTriples::Solrizer::SolrService.new
+ActiveTriples::Solrizer::SolrService.register
 ```
 
 #### Example:
@@ -67,8 +67,8 @@ is = ActiveTriples::Solrizer::IndexingService.new(ca)
 doc = is.generate_solr_document
 
 # persist doc to solr
-ss.add(doc)
-ss.commit
+ActiveTriples::Solrizer::SolrService.add(doc)
+ActiveTriples::Solrizer::SolrService.commit
 ```
 
 
