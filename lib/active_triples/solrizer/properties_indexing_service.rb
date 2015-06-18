@@ -9,18 +9,17 @@ module ActiveTriples::Solrizer
     end
 
     def solr_fields(obj)
-binding.pry
       attrs_values = obj.attributes
       solr_doc = {}
-      obj._active_triples_config.map do |c|
-        next unless c.respond_to? indexed
+      obj._active_triples_config.map do |cfg|
+        next unless cfg.respond_to? :indexed
 
-        term = c.term
+        term = cfg.term
         values = attrs_values[term]
         next if values.first.nil?
 
-        sortable = c.respond_to? sortable ? c.sortable : false
-        multiple = c.respond_to? multiple ? c.multiple : false
+        sortable = cfg.respond_to? :sortable ? cfg.sortable : false
+        multiple = cfg.respond_to? :multiple ? cfg.multiple : false
 
         type = "t"   # default
         type = "i" if values.first.is_a? Fixnum
@@ -56,18 +55,18 @@ binding.pry
         solr_doc[solr_fieldname] = solr_value
       end
 
-      #
-      #
-      # attrs = obj.attributes
-      # attrs.each do |k,v|
-      #   next unless v.is_a? Array
-      #   next unless v.first.is_a? ActiveTriples::Resource
-      #   attrs[k] = v.first.id
-      # end
-      # attrs
-
       solr_doc
     end
+
+    #
+    #
+    # attrs = obj.attributes
+    # attrs.each do |k,v|
+    #   next unless v.is_a? Array
+    #   next unless v.first.is_a? ActiveTriples::Resource
+    #   attrs[k] = v.first.id
+    # end
+    # attrs
 
   end
 end
