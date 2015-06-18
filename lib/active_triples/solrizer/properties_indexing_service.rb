@@ -22,20 +22,38 @@ binding.pry
         sortable = c.respond_to? sortable ? c.sortable : false
         multiple = c.respond_to? multiple ? c.multiple : false
 
+        type = "t"   # default
         type = "i" if values.first.is_a? Fixnum
         type = "f" if values.first.is_a? Float
-        type = "t" if values.first.is_a? String
 
         solr_fieldname = "#{term}_#{type}si"
         solr_fieldname = "#{solr_fieldname}m" if multiple
 
-        # TODO get value
-        #   -- values.first for single value && values.size == 1
-        #   -- add each for multiple values && values.size >= 1
-        #   -- collapse to one value if single value && values.size > 1
 
-        # TODO add 1..m to solr doc
-        # TODO add sort version if sortable
+        # TODO ??? Would it hurt to determine multiple from the number of actual values ???
+        #      if values.size > 1, then multiple = true
+        #      so some docs might have creator_tsim and others creator_tsi
+        # This will be fine for general search where the field is not specified.
+        # I guess the problem will be in a specific search by field, e.g. creator_tsi:George*
+
+        if multiple
+          solr_value = values
+        elsif values.size == 1
+          solr_value = values.first
+        elsif type == "t"
+          solr_value = values.to_s   # TODO Is this how to handle multiple values
+        elsif type == "i" || type == "f"
+          next   # can't do anything for multiple numbers when multiple values are not supported
+        end
+
+        solr_doc[solr_fieldname] = solr_value
+
+        next unless sortable && type == "t"
+
+        solr_fieldname = "#{term}_ssi"
+        solr_fieldname = "#{solr_fieldname}m" if multiple
+
+        solr_doc[solr_fieldname] = solr_value
       end
 
       #
