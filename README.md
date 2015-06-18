@@ -46,6 +46,11 @@ require 'active_triples/solrizer'
 # create an in-memory repository for ad-hoc testing
 ActiveTriples::Repositories.add_repository :default, RDF::Repository.new
 
+# configure the solr url
+ActiveTriples::Solrizer.configure do |config|
+  config.solr_uri = "http://localhost:8983/solr/#/~cores/active_triples"
+end
+
 # create a DummyResource for ad-hoc testing
 class DummyResource < ActiveTriples::Resource
   configure :base_uri => "http://example.org",

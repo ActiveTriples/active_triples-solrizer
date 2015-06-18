@@ -10,6 +10,8 @@ module ActiveTriples
     eager_autoload do
       autoload :Configuration
       autoload :IndexingService
+      autoload :ProfileIndexingService
+      autoload :PropertiesIndexingService
       autoload :SolrService
     end
 
