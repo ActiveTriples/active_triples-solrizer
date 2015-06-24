@@ -31,7 +31,6 @@ module ActiveTriples::Solrizer
       solr_doc = {}
       # Solrizer.set_field(solr_doc, 'system_create', c_time, :stored_sortable)
       # Solrizer.set_field(solr_doc, 'system_modified', m_time, :stored_sortable)
-      # Solrizer.set_field(solr_doc, 'active_fedora_model', object.class.inspect, :stored_sortable)
       # solr_doc.merge!(QueryResultBuilder::HAS_MODEL_SOLR_FIELD => object.has_model)
       solr_doc.merge!(SOLR_DOCUMENT_ID.to_sym => object.id)
       solr_doc.merge!(:at_model_ssi => object.class.to_s)   # TODO dynamic for now, but probably should be static solr field
@@ -39,7 +38,7 @@ module ActiveTriples::Solrizer
       solr_doc.merge!(properties_service.new(object).export)
       # solr_doc = solrize_relationships(solr_doc)
       # solr_doc = solrize_rdf_assertions(solr_doc)
-      # yield(solr_doc) if block_given?
+      yield(solr_doc) if block_given?
       solr_doc
     end
 
