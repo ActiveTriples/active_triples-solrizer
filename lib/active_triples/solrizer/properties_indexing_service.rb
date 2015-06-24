@@ -32,17 +32,6 @@ module ActiveTriples::Solrizer
         solr_fieldname += "i"
         solr_fieldname += "m"   if multiple
 
-# solr_fieldname = "#{key}_#{type}s" unless type == "t" && sortable
-# solr_fieldname = "#{solr_fieldname}i"
-# solr_fieldname = "#{solr_fieldname}m" if multiple
-
-
-        # TODO ??? Would it hurt to determine multiple from the number of actual values ???
-        #      if values.size > 1, then multiple = true
-        #      so some docs might have creator_tsim and others creator_tsi
-        # This will be fine for general search where the field is not specified.
-        # I guess the problem will be in a specific search by field, e.g. creator_tsi:George*
-
         if multiple
           solr_value = values.to_a
           solr_value.collect! { |v| v.id }  if values.first.is_a? ActiveTriples::Resource
@@ -56,14 +45,14 @@ module ActiveTriples::Solrizer
           next   # can't do anything for multiple numbers when multiple values are not supported
         end
 
-        solr_doc[solr_fieldname] = solr_value
+        solr_doc[solr_fieldname.to_sym] = solr_value
 
         next unless sortable && type == "t"
 
         solr_fieldname = "#{key}_sort_ss"
         solr_fieldname = "#{solr_fieldname}m" if multiple
 
-        solr_doc[solr_fieldname] = solr_value
+        solr_doc[solr_fieldname.to_sym] = solr_value
       end
 
       solr_doc
