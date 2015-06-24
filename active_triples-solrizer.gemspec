@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency('active-triples', '~> 0.7')
   s.add_dependency('activesupport', '>= 3.0.0')
   s.add_dependency('solrizer')
+  s.add_dependency('json', '>= 1.8')
 
   s.add_development_dependency('rdoc')
   s.add_development_dependency('rspec')

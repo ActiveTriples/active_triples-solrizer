@@ -31,7 +31,6 @@ module ActiveTriples::Solrizer
         solr_fieldname += "s"   unless type == "t" && sortable
         solr_fieldname += "i"
         solr_fieldname += "m"   if multiple
-binding.pry
 
 # solr_fieldname = "#{key}_#{type}s" unless type == "t" && sortable
 # solr_fieldname = "#{solr_fieldname}i"
@@ -66,7 +65,6 @@ binding.pry
 
         solr_doc[solr_fieldname] = solr_value
       end
-binding.pry
 
       solr_doc
     end
