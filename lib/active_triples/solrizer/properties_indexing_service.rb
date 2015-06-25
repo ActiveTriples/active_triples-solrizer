@@ -18,16 +18,17 @@ module ActiveTriples::Solrizer
         next if values.first.nil?
 
         sortable = cfg.respond_to?( :sortable ) ? cfg.sortable : false
+        tokenize = cfg.respond_to?( :tokenize ) ? cfg.tokenize : false
+        range    = cfg.respond_to?( :range    ) ? cfg.range    : false
         multiple = cfg.respond_to?( :multiple ) ? cfg.multiple : false
 
         type = "t"   # default
+        type = "s"  unless tokenize  # default to string if shouldn't be tokenized
         type = "i"  if values.first.is_a?( Fixnum ) && !sortable
-        type = "it" if values.first.is_a?( Fixnum ) &&  sortable
         type = "f"  if values.first.is_a?( Float )  && !sortable
-        type = "ft" if values.first.is_a?( Float )  &&  sortable
-
 
         solr_fieldname = key + "_" + type
+        solr_fieldname += "t"   if range
         solr_fieldname += "s"   unless type == "t" && sortable
         solr_fieldname += "i"
         solr_fieldname += "m"   if multiple
@@ -57,16 +58,5 @@ module ActiveTriples::Solrizer
 
       solr_doc
     end
-
-    #
-    #
-    # attrs = obj.attributes
-    # attrs.each do |k,v|
-    #   next unless v.is_a? Array
-    #   next unless v.first.is_a? ActiveTriples::Resource
-    #   attrs[k] = v.first.id
-    # end
-    # attrs
-
   end
 end

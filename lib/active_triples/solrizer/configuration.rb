@@ -4,9 +4,6 @@ module ActiveTriples::Solrizer
     attr_reader :solr_uri
     attr_reader :read_timeout
     attr_reader :open_timeout
-    attr_reader :max_solr_retries
-    attr_reader :base_sleep_seconds
-    attr_reader :max_sleep_seconds
 
 
     def self.default_solr_uri
@@ -24,28 +21,10 @@ module ActiveTriples::Solrizer
     end
     private_class_method :default_open_timeout
 
-    def self.default_max_solr_retries
-      @default_max_solr_retries = 5
-    end
-    private_class_method :default_max_solr_retries
-
-    def self.default_base_sleep_seconds
-      @default_base_sleep_seconds = 1
-    end
-    private_class_method :default_base_sleep_seconds
-
-    def self.default_max_sleep_seconds
-      @default_max_sleep_seconds = 5
-    end
-    private_class_method :default_max_sleep_seconds
-
     def initialize
       @solr_uri           = self.class.send(:default_solr_uri)
       @read_timeout   = self.class.send(:default_read_timeout)
       @open_timeout   = self.class.send(:default_open_timeout)
-      @max_solr_retries   = self.class.send(:default_max_solr_retries)
-      @base_sleep_seconds = self.class.send(:default_base_sleep_seconds)
-      @max_sleep_seconds  = self.class.send(:default_max_sleep_seconds)
     end
 
     def solr_uri=(new_solr_uri)
@@ -70,30 +49,6 @@ module ActiveTriples::Solrizer
 
     def reset_open_timeout
       @open_timeout = self.class.send(:default_open_timeout)
-    end
-
-    def max_solr_retries=(new_max_solr_retries)
-      @max_solr_retries = new_max_solr_retries
-    end
-
-    def reset_max_solr_retries
-      @max_solr_retries = self.class.send(:default_max_solr_retries)
-    end
-
-    def base_sleep_seconds=(new_base_sleep_seconds)
-      @base_sleep_seconds = new_base_sleep_seconds
-    end
-
-    def reset_base_sleep_seconds
-      @base_sleep_seconds = self.class.send(:default_base_sleep_seconds)
-    end
-
-    def max_sleep_seconds=(new_max_sleep_seconds)
-      @max_sleep_seconds = new_max_sleep_seconds
-    end
-
-    def reset_max_sleep_seconds
-      @max_sleep_seconds = self.class.send(:default_max_sleep_seconds)
     end
   end
 end
