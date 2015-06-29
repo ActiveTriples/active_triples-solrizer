@@ -20,10 +20,6 @@ module ActiveTriples::Solrizer
       PropertiesIndexingService
     end
 
-    # def rdf_service
-    #   RDF::IndexingService
-    # end
-
     # Creates a solr document hash for the {#object}
     # @yield [Hash] yields the solr document
     # @return [Hash] the solr document

@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.add_dependency('solrizer')
   s.add_dependency('json', '>= 1.8')
 
+  s.add_development_dependency('pry')
+  s.add_development_dependency('pry-byebug')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('rspec')
   s.add_development_dependency('coveralls')
