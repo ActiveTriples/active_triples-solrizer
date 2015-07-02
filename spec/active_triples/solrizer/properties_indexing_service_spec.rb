@@ -5,14 +5,14 @@ describe ActiveTriples::Solrizer::PropertiesIndexingService do
   before do
     class DummyResource < ActiveTriples::Resource
       configure :type => RDF::URI('http://example.org/SomeClass')
-      property :title,        :predicate => RDF::SCHEMA.title,       :indexed => true, :tokenize => true, :sortable => true  # test tokenized text & sortable
-      property :description,  :predicate => RDF::SCHEMA.description, :indexed => true, :tokenize => true                     # test tokenized text, but not sortable
-      property :borrower_uri, :predicate => RDF::SCHEMA.borrower,    :indexed => true                     # test non-tokenized text
-      property :answer_count, :predicate => RDF::SCHEMA.answerCount, :indexed => true                     # test int
-      property :clip_number,  :predicate => RDF::SCHEMA.clipNumber,  :indexed => true, :range => true     # test int range
-      property :price,        :predicate => RDF::SCHEMA.price,       :indexed => true                     # test float
-      property :awards,       :predicate => RDF::SCHEMA.awards,      :indexed => true, :multiple => true  # test multiple values
-      property :bookEdition,  :predicate => RDF::SCHEMA.bookEdition                                       # test non-indexed property
+      property :title,        :predicate => RDF::SCHEMA.title,       :data_type => :text,   :behaviors => [:indexed, :sortable]  # test tokenized text & sortable
+      property :description,  :predicate => RDF::SCHEMA.description, :data_type => :text,   :behaviors => [:indexed]             # test tokenized text, but not sortable
+      property :borrower_uri, :predicate => RDF::SCHEMA.borrower,    :data_type => :string, :behaviors => [:indexed]             # test non-tokenized text
+      property :answer_count, :predicate => RDF::SCHEMA.answerCount, :data_type => :int,    :behaviors => [:indexed]             # test int
+      property :clip_number,  :predicate => RDF::SCHEMA.clipNumber,  :data_type => :int,    :behaviors => [:indexed, :range]     # test int range
+      property :price,        :predicate => RDF::SCHEMA.price,       :data_type => :float,  :behaviors => [:indexed]             # test float
+      property :awards,       :predicate => RDF::SCHEMA.awards,      :data_type => :string, :behaviors => [:indexed, :multiple]  # test multiple values
+      property :bookEdition,  :predicate => RDF::SCHEMA.bookEdition                                                  # test non-indexed property
     end
     ActiveTriples::Repositories.add_repository :default, RDF::Repository.new
   end
