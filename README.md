@@ -1,7 +1,7 @@
 # ActiveTriples::Solrizer
 
 [![Build Status](https://travis-ci.org/ActiveTriples/active_triples-solrizer.png?branch=master)](https://travis-ci.org/ActiveTriples/active_triples-solrizer)
-[![Coverage Status](https://coveralls.io/repos/ActiveTriples/active_triples-solrizer/badge.png?branch=master)](https://coveralls.io/r/ActiveTriples/active_triples-solrizer?branch=master)
+[![Coverage Status](https://coveralls.io/repos/ActiveTriples/active_triples-solrizer/badge.svg?branch=master&service=github)](https://coveralls.io/github/ActiveTriples/active_triples-solrizer?branch=master)
 [![Gem Version](https://badge.fury.io/rb/active_triples-solrizer.svg)](http://badge.fury.io/rb/active_triples-solrizer)
 
 Provides a default solr implementation under the [ActiveTriples](https://github.com/ActiveTriples/ActiveTriples) framework.
