@@ -39,11 +39,11 @@ end
 | :text_en    | tokenized English text |
 | :string     | non-tokenized string |
 | :integer    | |
-| :date       | format for this date field is of the form 1995-12-31T23:59:59Z; Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z |
 | :long       | |
 | :double     | |
 | :float      | |
 | :boolean    | |
+| :date       | format for this date field is of the form 1995-12-31T23:59:59Z; Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z |
 | :coordinate | TBA - used to index the lat and long components for the "location" |
 | :location   | TBA - latitude/longitude|
 | :guess      | allow guessing of the type based on the type of the property value; NOTE: only checks the type of the first value when multiple values |
