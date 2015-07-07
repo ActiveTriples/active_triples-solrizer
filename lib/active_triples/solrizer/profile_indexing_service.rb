@@ -2,8 +2,14 @@ require 'json'
 
 module ActiveTriples::Solrizer
   class ProfileIndexingService
-    def initialize(object)
+    def initialize(object=nil)
       @object = object
+    end
+
+    def export
+      return '' if @object.nil?
+      # @object.serializable_hash.to_json
+      attributes(@object).to_json
     end
 
     def import( object_profile, object_class=nil )
@@ -25,18 +31,7 @@ module ActiveTriples::Solrizer
       @object
     end
 
-    def set_attributes(obj,attrs)
-      attrs.each do |k,v|
-        next if k == 'id'
-        obj.set_value( k, v )
-      end
-    end
-
-    def export
-      # @object.serializable_hash.to_json
-      attributes(@object).to_json
-    end
-
+private
     def attributes(obj)
       attrs = obj.attributes
       attrs.each do |k,v|
@@ -45,6 +40,13 @@ module ActiveTriples::Solrizer
         attrs[k] = v.first.id
       end
       attrs
+    end
+
+    def set_attributes(obj,attrs)
+      attrs.each do |k,v|
+        next if k == 'id'
+        obj.set_value( k, v )
+      end
     end
 
   end

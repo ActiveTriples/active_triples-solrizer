@@ -1,6 +1,6 @@
 module ActiveTriples::Solrizer
   class IndexingService
-    include ::Solrizer::Common
+    # include ::Solrizer::Common
     attr_reader :object
 
     def initialize(obj)

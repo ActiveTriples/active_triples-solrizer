@@ -1,3 +1,4 @@
+ENV['environment'] ||= 'test'
 require 'coveralls'
 Coveralls.wear!
 
@@ -6,7 +7,7 @@ Bundler.setup
 
 require 'active_triples/solrizer'
 require 'active_triples'
-require 'pry'
+require 'pry' unless ENV['CI']
 
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }

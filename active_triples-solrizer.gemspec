@@ -14,11 +14,10 @@ Gem::Specification.new do |s|
   s.license     = "APACHE2"
   s.required_ruby_version     = '>= 2.0.0'
 
-  s.add_dependency 'rsolr', "~> 1.0.10"
-  s.add_dependency('active-triples', '~> 0.7')
-  s.add_dependency('activesupport', '>= 3.0.0')
+  s.add_dependency 'rsolr'
+  s.add_dependency('active-triples')
   s.add_dependency('solrizer')
-  s.add_dependency('json', '>= 1.8')
+  s.add_dependency('json')
 
   s.add_development_dependency('pry')
   s.add_development_dependency('pry-byebug')
