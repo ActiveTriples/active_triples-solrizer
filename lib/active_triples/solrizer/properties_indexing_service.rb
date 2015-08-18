@@ -55,7 +55,16 @@ module ActiveTriples::Solrizer
       solr_doc
     end
 
-private
+    def build_solr_fieldname( key, encoded_data_type, modifiers )
+      solr_fieldname = key + "_" + encoded_data_type.to_s
+      return solr_fieldname if encoded_data_type == :coordinate  # no supported modifiers
+      solr_fieldname += "s"   if modifiers[:stored]
+      solr_fieldname += "i"   if modifiers[:indexed]
+      solr_fieldname += "m"   if modifiers[:multiValued] && encoded_data_type != :b
+      solr_fieldname += "v"   if modifiers[:vectored] && [:t,:te].include?( encoded_data_type )
+      solr_fieldname
+    end
+
     def encode_data_type( data_type, modifiers, values )
       return :t           if data_type == :text
       return :te          if data_type == :text_en
@@ -77,6 +86,7 @@ private
       nil
     end
 
+private
     def guess_data_type( modifiers, values )
       data_type = :t   # default to text which tokenizes a string
       data_type = :i   if values.first.is_a?( Fixnum )
@@ -102,16 +112,6 @@ private
       modifiers
     end
 
-
-    def build_solr_fieldname( key, encoded_data_type, modifiers )
-      solr_fieldname = key + "_" + encoded_data_type.to_s
-      return solr_fieldname if encoded_data_type == :coordinate  # no supported modifiers
-      solr_fieldname += "s"   if modifiers[:stored]
-      solr_fieldname += "i"   if modifiers[:indexed]
-      solr_fieldname += "m"   if modifiers[:multiValued] && encoded_data_type != :b
-      solr_fieldname += "v"   if modifiers[:vectored] && [:t,:te].include?( encoded_data_type )
-      solr_fieldname
-    end
 
     def build_solr_value( values, encoded_data_type, modifiers )
       if modifiers[:multiValued] && encoded_data_type != :b

@@ -12,7 +12,10 @@ module ActiveTriples
       autoload :IndexingService
       autoload :ProfileIndexingService
       autoload :PropertiesIndexingService
+      autoload :SolrInstanceLoader
       autoload :SolrService
+      autoload :SolrQueryBuilder
+      autoload :QueryResultBuilder
     end
 
 
