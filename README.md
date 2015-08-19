@@ -140,6 +140,25 @@ ActiveTriples::Solrizer::SolrService.add(doc)
 ActiveTriples::Solrizer::SolrService.commit
 ```
 
+# query from solr
+```
+query = ActiveTriples::Solrizer::SolrQueryBuilder.raw_query(:id,"http://www.example.org/dr")
+# => "_query_:\"{!raw f=id}http://www.example.org/dr\""
+
+results = ActiveTriples::Solrizer::SolrService.query(query)
+# => [{"id"=>"http://www.example.org/dr",
+#      "at_model_ssi"=>"DummyResource",
+#      "object_profile_ss"=>
+#       "{\"id\":\"http://www.example.org/dr\",\"title\":[\"Test Title\"],\"description_si\":[\"Test text description stored and indexed.\"],\"borrower_uri_i\":[\"http://example.org/i/b2\"],\"clip_number_simr\":[7,8,9,10],\"price_s\":[789.01],\"bookEdition\":[\"Ed. 2\"]}",
+#      "description_si_tsi"=>"Test text description stored and indexed.",
+#      "clip_number_simr_itsim"=>[7, 8, 9, 10],
+#      "price_s_fs"=>789.01,
+#      "_version_"=>1509868575079268352,
+#      "timestamp"=>"2015-08-18T18:34:41.162Z"}]
+
+obj = ActiveTriples::Solrizer::IndexingService.load_from_solr(results.first)
+```
+
 ### Example: Profile Indexing Service to serialize/deserialize resource
 
 ```ruby

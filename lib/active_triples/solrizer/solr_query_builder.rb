@@ -11,6 +11,12 @@ module ActiveTriples::Solrizer
       q.empty? ? "id:NEVER_USE_THIS_ID" : q.join(" OR ".freeze)
     end
 
+    # Construct a solr query for one id
+    # @param [Array] id_array the ids that you want included in the query
+    def self.id_query(id)
+      q = raw_query(SOLR_DOCUMENT_ID, id)
+    end
+
     # Create a raw query clause suitable for sending to solr as an fq element
     # @param [String] key
     # @param [String] value

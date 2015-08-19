@@ -24,8 +24,11 @@ module ActiveTriples::Solrizer
 
       # @object.deserializable_json(object_profile)
 
-      attrs = JSON(object_profile)
       object_class ||= @object.class
+      object_class = ActiveTriples::Solrizer.class_from_string(object_class) if object_class.is_a? String
+
+      raise ArgumentError, 'object_class cannot be turned into a Class' unless object_class.is_a? Class
+      attrs = JSON(object_profile)
       @object = object_class.new(attrs['id'])
       set_attributes(@object,attrs)
       @object
