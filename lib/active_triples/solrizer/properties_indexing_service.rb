@@ -39,7 +39,7 @@ module ActiveTriples::Solrizer
         modifiers = parse_modifiers cfg.behaviors
         next unless modifiers[:indexed] || modifiers[:stored]
         values = attrs_values[key]
-        values = values.to_a if Object.const_defined?("ActiveTriples::Relation") && values.kind_of?(ActiveTriples::Relation)
+        values = values.to_a if Object::ActiveTriples.const_defined?("Relation") && values.kind_of?(ActiveTriples::Relation)
         next if values.nil? || !values.is_a?(Array) || values.first.nil?
 
         encoded_data_type = encode_data_type( cfg.type, modifiers, values )

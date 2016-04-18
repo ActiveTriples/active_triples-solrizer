@@ -75,6 +75,30 @@ describe ActiveTriples::Solrizer::ProfileIndexingService do
         expect( ActiveTriples::Solrizer::ProfileIndexingService.new(dr_indexed_guess).export ).to eq expected_object_profile_indexed_guess
       end
     end
+
+    context "when a property is a resource" do
+      before do
+        class DummyResourceB < ActiveTriples::Resource
+          configure :type => RDF::URI('http://example.org/SomeClass')
+        end
+        class DummyResourceA < ActiveTriples::Resource
+          configure :type => RDF::URI('http://example.org/SomeClass')
+          property :resource_b, :predicate => RDF::URI("http://example.org/ontology/related_object")
+        end
+      end
+
+      it "should put the object id in place of the resource" do
+        dr_b = DummyResourceB.new('http://www.example.org/dr_b')
+        dr_a = DummyResourceA.new('http://www.example.org/dr_a')
+        dr_a.resource_b = dr_b
+
+        expected_object_profile =
+          '{"id":"http://www.example.org/dr_a",'\
+           '"resource_b":"http://www.example.org/dr_b"}'
+
+        expect( ActiveTriples::Solrizer::ProfileIndexingService.new(dr_a).export ).to eq expected_object_profile
+      end
+    end
   end
 
   describe "#import" do
