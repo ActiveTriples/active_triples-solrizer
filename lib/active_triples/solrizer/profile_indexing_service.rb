@@ -35,7 +35,7 @@ private
     def attributes(obj)
       attrs = obj.attributes
       attrs.each do |k,v|
-        next unless v.is_a? Array
+        next unless (v.is_a?(Array) || (Object::ActiveTriples.const_defined?("Relation") && v.is_a?(ActiveTriples::Relation)))
         next unless v.first.is_a? ActiveTriples::Resource
         attrs[k] = v.first.id
       end
