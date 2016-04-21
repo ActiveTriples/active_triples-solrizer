@@ -28,7 +28,7 @@ module ActiveTriples::Solrizer
         # Register Solr
 
         unless Thread.current[:solr_service]
-          register(ActiveFedora.solr_config[:url])
+          register(ActiveTriples::Solrizer.configuration.solr_uri)
         end
 
         raise SolrNotInitialized unless Thread.current[:solr_service]
