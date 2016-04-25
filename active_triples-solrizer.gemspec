@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = '>= 2.0.0'
 
   s.add_dependency 'rsolr'
-  s.add_dependency('active-triples')
+  # s.add_dependency('active-triples')
   s.add_dependency('solrizer')
   s.add_dependency('json')
 
