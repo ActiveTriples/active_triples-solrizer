@@ -99,6 +99,29 @@ describe ActiveTriples::Solrizer::ProfileIndexingService do
         expect( ActiveTriples::Solrizer::ProfileIndexingService.new(dr_a).export ).to eq expected_object_profile
       end
     end
+
+    context "when additional statements in resource" do
+      before do
+        class DummyResourceAS < ActiveTriples::Resource
+          configure :type => RDF::URI('http://example.org/SomeClass')
+          property :content, :predicate => RDF::URI("http://example.org/ontology/content")
+        end
+      end
+
+      it "should not include additional statements in export" do
+        dr_as = DummyResourceAS.new('http://www.example.org/dr_as')
+        dr_as.content = 'Test content'
+        additional_statement = RDF::Statement.new(RDF::URI('http://example.org/OTHER_RESOURCE'), RDF::DC.title, 'Comet in Moominland')
+        dr_as << additional_statement
+
+        expected_object_profile =
+            '{"id":"http://www.example.org/dr_as",'\
+           '"content":["Test content"]}'
+
+        expect(dr_as.statements).to include additional_statement
+        expect( ActiveTriples::Solrizer::ProfileIndexingService.new(dr_as).export ).to eq expected_object_profile
+      end
+    end
   end
 
   describe "#import" do
