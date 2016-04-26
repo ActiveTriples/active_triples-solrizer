@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Provide default solrizer implementation for ActiveTriples.}
   s.description = %q{active_triples-solrizer provides a default solr indexing implementation for ActiveTriples.}
   s.license     = "APACHE2"
-  s.required_ruby_version     = '>= 2.0.0'
+  s.required_ruby_version     = '>= 2.2.0'
 
   s.add_dependency 'rsolr'
   s.add_dependency('active-triples')
